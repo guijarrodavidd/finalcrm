@@ -90,6 +90,13 @@ $usuario_nombre = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre
                     <i class="fas fa-fw fa-tasks"></i>
                     <span>Actividades</span></a>
             </li>
+            <!-- Cerrar sesión -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>Cerrar Sesión</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
