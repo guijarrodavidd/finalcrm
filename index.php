@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $usuario = mysqli_fetch_assoc($resultado);
             mysqli_stmt_close($stmt);
 
-            if ($usuario && $usuario['contraseña'] === $contraseña) {
+            if ($usuario && password_verify($contraseña, $usuario['contraseña'])) {
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['usuario_nombre'] = $usuario['nombre'];
                 header("Location: principal.php");
@@ -38,9 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
-// OPCIONAL: cerrar la conexión al final
-// $connClass->closeConnection($conexion);
 ?>
 
 

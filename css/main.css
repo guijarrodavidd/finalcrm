@@ -1,0 +1,111 @@
+/* Estilos generales para etiquetas */
+.badge-etiqueta {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+/* Fila de actividades */
+.row-actividades {
+    background-color: #f8f9fa;
+}
+
+/* Cliente principal (clickeable) */
+.cliente-principal {
+    cursor: pointer;
+}
+
+.cliente-principal:hover {
+    background-color: #e8f4ff;
+}
+
+/* Fila expandible */
+.expandible-row {
+    display: none;
+}
+
+.expandible-row.show {
+    display: table-row;
+}
+
+/* Items de actividades */
+.actividad-item {
+    background: white;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 4px solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.actividad-contenido {
+    flex: 1;
+}
+
+.actividad-checkbox {
+    margin-left: 10px;
+}
+
+/* Colores de actividades por estado */
+.actividad-futura {
+    border-left-color: #6c757d !important;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.actividad-hoy {
+    border-left-color: #28a745 !important;
+    background-color: #f0fdf4;
+    color: #155724;
+}
+
+.actividad-pasada {
+    border-left-color: #dc3545 !important;
+    background-color: #fdf2f2;
+    color: #721c24;
+}
+
+.actividad-completada {
+    border-left-color: #6c757d !important;
+    background-color: #e9ecef;
+    color: #6c757d;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* Badges de próxima actividad */
+.proxima-futura {
+    background-color: #6c757d;
+    color: white;
+}
+
+.proxima-hoy {
+    background-color: #28a745;
+    color: white;
+}
+
+.proxima-pasada {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Botón cliente (para formularios) */
+.btn-cliente {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    color: inherit;
+}
+
+.btn-cliente:hover {
+    text-decoration: none;
+    color: inherit;
+}
