@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($usuario_id) || empty($contraseña)) {
         $error = "Por favor rellena todos los campos";
     } else {
-        $query = "SELECT id, nombre, contraseña FROM usuarios WHERE id = ?";
+        $query = "SELECT id, nombre, contraseña, rol FROM usuarios WHERE id = ?";
         $stmt = mysqli_prepare($conexion, $query);
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "i", $usuario_id);
@@ -28,7 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($usuario && password_verify($contraseña, $usuario['contraseña'])) {
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['usuario_nombre'] = $usuario['nombre'];
-                header("Location: principal.php");
+                $_SESSION['usuario_rol'] = $usuario['rol'];
+                
+                // Redirigir según el rol
+                if ($usuario['rol'] == 'encargado') {
+                    header("Location: admin/index.php");
+                } else {
+                    header("Location: principal.php");
+                }
                 exit();
             } else {
                 $error = "Usuario o contraseña incorrectos";
@@ -39,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
