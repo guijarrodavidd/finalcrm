@@ -45,43 +45,7 @@ $hoy = date('Y-m-d');
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-
-                <!-- Topbar -->
-                <nav class="bg-gradient-primary navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="index.php">
-                            <img src="../images/phonehouse.png" alt="PhoneCRM Logo" style="max-width: 100px; height: auto;">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="usuarios.php">
-                                        <i class="fas fa-user-tie"></i> Gestión de Usuarios
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="index.php">
-                                        <i class="fas fa-tachometer-alt"></i> Dashboard Admin
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../clientes.php">
-                                        <i class="fas fa-user-tie"></i> Clientes
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-danger" href="../logout.php">
-                                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-
+                <?php include("./includes/navbar.php"); ?>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 

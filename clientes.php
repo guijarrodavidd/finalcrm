@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("./admin/includes/database.php");
-include("./admin/includes/crudClientes.php");
+require_once "./admin/includes/crudClientes.php";
 
 $connClass = new Connection();
 $conexion = $connClass->getConnection();
@@ -12,7 +12,7 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 $usuario_id = $_SESSION['usuario_id'];
-$crud = new CrudClientes($conexion, $usuario_id);
+$crud = new crudClientes($conexion, $usuario_id);
 
 // Agregar actividad
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_actividad'])) {
@@ -38,6 +38,7 @@ $total_clientes = $crud->getTotalClientes();
 $resultado = $crud->getClientes();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -55,53 +56,14 @@ $resultado = $crud->getClientes();
 
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="principal.php">
-                            <img src="images/phonehouse.png" alt="PhoneCRM Logo" style="max-width: 100px; height: auto;">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="principal.php">
-                                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="clientes.php">
-                                        <i class="fas fa-users"></i> Clientes
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="actividades.php">
-                                        <i class="fas fa-tasks"></i> Actividades
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-danger" href="logout.php">
-                                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-
+                <?php include("./admin/includes/navbar.php"); ?>
                 <div class="container-fluid">
-
                     <div class="mb-4 mt-4">
                         <a href="anadir_cliente.php" class="btn btn-primary">
                             <i class="fas fa-plus fa-fw"></i> Nuevo Cliente
                         </a>
                     </div>
-
                     <div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
                             <span aria-hidden="true">&times;</span>
@@ -113,7 +75,6 @@ $resultado = $crud->getClientes();
                         <span class="badge badge-danger">ROJO</span> Pasado &nbsp;
                         <span class="badge badge-secondary">✓</span> Completada
                     </div>
-
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Tabla de Clientes</h6>
