@@ -89,5 +89,53 @@ class CrudClientes {
             return 'futura';
         }
     }
+    // Obtener cliente por ID
+    public function getClienteById($cliente_id) {
+        $sql = "SELECT * FROM clientes WHERE id = ? AND usuario_id = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("ii", $cliente_id, $this->usuario_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    // Actualizar cliente
+    public function actualizarCliente($cliente_id, $nombre_apellidos, $dni, $telefono, $convergente) {
+        $sql = "UPDATE clientes SET nombre_apellidos = ?, dni = ?, telefono = ?, convergente = ? WHERE id = ? AND usuario_id = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("sssiii", $nombre_apellidos, $dni, $telefono, $convergente, $cliente_id, $this->usuario_id);
+        return $stmt->execute();
+    }
+        // Obtener todas las etiquetas disponibles
+    public function getTodasLasEtiquetas() {
+        $sql = "SELECT id, nombre, color FROM etiquetas ORDER BY nombre ASC";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    // Obtener etiquetas del cliente (IDs)
+    public function getEtiquetasClienteIds($cliente_id) {
+        $sql = "SELECT etiqueta_id FROM cliente_etiqueta WHERE cliente_id = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $cliente_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    // Eliminar todas las etiquetas del cliente
+    public function eliminarEtiquetasCliente($cliente_id) {
+        $sql = "DELETE FROM cliente_etiqueta WHERE cliente_id = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $cliente_id);
+        return $stmt->execute();
+    }
+
+    // Agregar etiqueta al cliente
+    public function agregarEtiquetaCliente($cliente_id, $etiqueta_id) {
+        $sql = "INSERT INTO cliente_etiqueta (cliente_id, etiqueta_id) VALUES (?, ?)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("ii", $cliente_id, $etiqueta_id);
+        return $stmt->execute();
+    }
 }
 ?>
