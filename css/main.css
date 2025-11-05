@@ -109,3 +109,407 @@
     text-decoration: none;
     color: inherit;
 }
+
+/* Estilos para el menú hamburguesa en móvil */
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #f0f0f0;
+    color: #007bff !important;
+    border-radius: 0.25rem;
+}
+
+.navbar-nav .nav-link.active {
+    background-color: #e7f3ff;
+    color: #007bff !important;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link.text-danger:hover {
+    background-color: #ffe7e7 !important;
+    color: #dc3545 !important;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 991px) {
+    .navbar-nav {
+        border-top: 1px solid #dee2e6;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .navbar-nav .nav-link:last-child {
+        border-bottom: none;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background-color: #f8f9fa;
+    }    
+}
+
+/* ============================================
+   ESTILOS PARA ALLAMAR.PHP
+   ============================================ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body.allamar-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+.allamar-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+.cliente-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cliente-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 1rem 1rem 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.cliente-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cliente-header .contact-info {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    opacity: 0.95;
+}
+
+.cliente-header p {
+    margin: 0.3rem 0;
+}
+
+.cliente-body {
+    padding: 2rem;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-box {
+    background: #f8f9fc;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #667eea;
+}
+
+.info-box label {
+    font-size: 0.85rem;
+    color: #858796;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0;
+}
+
+.info-box p {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0.5rem 0 0 0;
+    font-weight: 500;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #667eea;
+}
+
+.badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.actividades-table {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.actividades-table thead {
+    background: #f8f9fc;
+}
+
+.actividades-table th {
+    color: #667eea;
+    font-weight: 600;
+    border-bottom: 2px solid #667eea;
+    padding: 0.75rem;
+}
+
+.actividades-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.actividades-table tbody tr:hover {
+    background-color: #f8f9fc;
+}
+
+.alert-proximaactividad {
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #667eea;
+}
+
+/* BOTONES DE NAVEGACIÓN */
+.nav-buttons {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: 50%;
+    transform: translateY(50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    z-index: 900;
+    max-width: 1200px;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: calc(100% - 40px);
+}
+
+.nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #667eea;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    pointer-events: all;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+/* BOTÓN VOLVER */
+.btn-volver {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    z-index: 999;
+    background: white !important;
+    color: #667eea !important;
+    border: 2px solid #667eea !important;
+}
+
+.btn-volver:hover {
+    background: #667eea !important;
+    color: white !important;
+}
+
+/* CONTADOR */
+.contador {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    font-weight: 600;
+    color: #667eea;
+    z-index: 999;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .cliente-header {
+        padding: 1.5rem;
+    }
+
+    .cliente-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .cliente-body {
+        padding: 1.5rem;
+    }
+
+    .info-row {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .btn-volver {
+        top: 80px;
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.9rem;
+    }
+
+    .contador {
+        top: 80px;
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+    }
+
+    body.allamar-page {
+        padding-top: 70px;
+    }
+
+    .allamar-wrapper {
+        padding-bottom: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cliente-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .info-row {
+        gap: 0.5rem;
+    }
+
+    .actividades-table {
+        font-size: 0.85rem;
+    }
+
+    .actividades-table th, .actividades-table td {
+        padding: 0.5rem;
+    }
+}
+/* ============================================
+   ESTILOS PARA FILAS COMPLETADAS - SOLUCIÓN DEFINITIVA
+   ============================================ */
+
+/* Filas completadas en tablas */
+table tbody tr.actividad-completada-row {
+    opacity: 0.5 !important;
+    background-color: #f5f5f5 !important;
+}
+
+table tbody tr.actividad-completada-row td {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+
+table tbody tr.actividad-completada-row td strong {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+
+table tbody tr.actividad-completada-row td a {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+
+table tbody tr.actividad-completada-row td span {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+
+/* Alternativa sin table tbody por si acaso */
+tr.actividad-completada-row {
+    opacity: 0.5 !important;
+    background-color: #f5f5f5 !important;
+}
+
+tr.actividad-completada-row td {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+
+tr.actividad-completada-row td strong,
+tr.actividad-completada-row td a,
+tr.actividad-completada-row td span {
+    text-decoration: line-through !important;
+    color: #999 !important;
+}
+

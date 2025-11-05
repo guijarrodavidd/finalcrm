@@ -30,7 +30,7 @@ $etiqueta_filtro = $_GET['etiqueta'] ?? null;
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
 $por_pagina = 30;
 
-// Obtener TODAS las etiquetas del sistema
+// Obtener todas las etiquetas del sistema
 $todas_etiquetas = $crudAct->getTodasEtiquetasSistema();
 
 // Calcular páginas según filtro
@@ -121,7 +121,7 @@ $total_actividades = $actividades->num_rows;
                                 <input type="hidden" name="filtro" value="<?php echo $filtro; ?>">
                                 <input type="hidden" name="pagina" value="1">
                                 
-                                <select name="etiqueta" class="form-control mr-2" onchange="this.form.submit();">
+                                <select name="etiqueta" class="form-control" id="etiqueta" onchange="this.form.submit();">
                                     <option value="">-- Todas las etiquetas --</option>
                                     <?php 
                                     $todas_etiquetas->data_seek(0);
@@ -139,7 +139,7 @@ $total_actividades = $actividades->num_rows;
                                 </select>
                                 
                                 <?php if ($etiqueta_filtro): ?>
-                                    <a href="actividades.php?filtro=<?php echo $filtro; ?>&pagina=1" class="btn btn-secondary btn-sm">
+                                    <a href="actividades.php?filtro=<?php echo $filtro; ?>&pagina=1" class="btn btn-secondary btn-sm ml-2">
                                         <i class="fas fa-times"></i> Limpiar
                                     </a>
                                 <?php endif; ?>
@@ -166,12 +166,9 @@ $total_actividades = $actividades->num_rows;
                         </div>
                         <div class="card-body">
                             <?php if ($total_actividades == 0): ?>
-                                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-info-circle"></i>
-                                    <strong>No se encuentran clientes con esta selección de etiquetas.</strong>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                <div class="text-center py-5">
+                                    <i class="fas fa-tasks fa-3x text-gray-300 mb-3"></i>
+                                    <p class="text-gray-500 mb-3">No hay actividades que coincidan con los filtros</p>
                                 </div>
                             <?php else: ?>
                                 <div class="table-responsive">
@@ -195,7 +192,7 @@ $total_actividades = $actividades->num_rows;
                                                 $hoy = date('Y-m-d');
                                                 $fecha_actividad = date('Y-m-d', strtotime($actividad['fecha']));
                                             ?>
-                                            <tr class="<?php echo $actividad['completada'] == 1 ? 'table-light' : ''; ?>">
+                                            <tr <?php if ($actividad['completada'] == 1) echo 'class="actividad-completada-row"'; ?>>
                                                 <td>
                                                     <a href="ver_cliente.php?id=<?php echo $actividad['cliente_id']; ?>" style="text-decoration: none;">
                                                         <strong><?php echo htmlspecialchars($actividad['nombre_apellidos']); ?></strong>

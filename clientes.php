@@ -127,7 +127,7 @@ if ($cliente_abierto) {
                                                placeholder="Nombre y apellidos..." value="<?php echo htmlspecialchars($busqueda); ?>">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="submit">
-                                                <i class="fas fa-search">🔎</i>
+                                                <i class="fas fa-search"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -289,7 +289,7 @@ if ($cliente_abierto) {
                                                                         while ($act = $actividades->fetch_assoc()):
                                                                             $color = crudClientes::getColorActividad($act['fecha'], $act['completada']);
                                                                     ?>
-                                                                        <div class="actividad-item actividad-<?php echo $color; ?>">
+                                                                        <div class="actividad-item <?php echo 'actividad-' . $color; ?>">
                                                                             <div class="actividad-contenido">
                                                                                 <strong><?php echo $act['tipo']; ?></strong>
                                                                                 <small class="ml-2"><?php echo date('d/m/Y', strtotime($act['fecha'])); ?></small>

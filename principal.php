@@ -34,6 +34,7 @@ $hoy = date('Y-m-d');
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 </head>
 <body id="page-top">
 
@@ -41,41 +42,8 @@ $hoy = date('Y-m-d');
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="principal.php">
-                            <img src="images/phonehouse.png" alt="PhoneCRM Logo" style="max-width: 100px; height: auto;">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="principal.php">
-                                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="clientes.php">
-                                        <i class="fas fa-users"></i> Clientes
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="actividades.php">
-                                        <i class="fas fa-tasks"></i> Actividades
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-danger" href="logout.php">
-                                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <!-- Navbar mediante include -->
+                <?php include("./admin/includes/navbar.php"); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
