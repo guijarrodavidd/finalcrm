@@ -121,6 +121,8 @@ $resultado_etiquetas = mysqli_query($conexion, $query_etiquetas);
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
     <style>
         .form-control:focus { border-color: #004085; box-shadow: 0 0 0 0.2rem rgba(0, 64, 133, 0.25); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.10);}
