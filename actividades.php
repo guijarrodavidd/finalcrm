@@ -16,54 +16,45 @@ $usuario_id = $_SESSION['usuario_id'];
 $crud = new crudClientes($conexion, $usuario_id);
 $crudAct = new crudActividades($conexion, $usuario_id);
 
-// Marcar completada/incompleta
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['marcar_completada'])) {
     $actividad_id = intval($_POST['actividad_id']);
     $estado = intval($_POST['estado']);
-    
     $crudAct->marcarCompletada($actividad_id, $estado);
 }
 
-// Obtener filtro y paginación
-$filtro = $_GET['filtro'] ?? 'todas';
+$filtro = $_GET['filtro'] ?? 'pendientes';
 $etiqueta_filtro = $_GET['etiqueta'] ?? null;
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
 $por_pagina = 30;
 
-// Obtener todas las etiquetas del sistema
 $todas_etiquetas = $crudAct->getTodasEtiquetasSistema();
 
-// Calcular páginas según filtro
 if ($etiqueta_filtro) {
     $etiqueta_filtro = intval($etiqueta_filtro);
     $total_paginas = $crudAct->getTotalPaginasActividadesEtiqueta($etiqueta_filtro, $filtro, $por_pagina);
 } else {
     if ($filtro === 'pendientes') {
         $total_paginas = $crudAct->getTotalPaginasActividadesPendientes($por_pagina);
-    } elseif ($filtro === 'completadas') {
-        $total_paginas = $crudAct->getTotalPaginasActividadesCompletadas($por_pagina);
     } else {
-        $total_paginas = $crudAct->getTotalPaginasActividades($por_pagina);
+        $total_paginas = $crudAct->getTotalPaginasActividadesCompletadas($por_pagina);
     }
 }
 
 if ($pagina < 1) $pagina = 1;
 if ($pagina > $total_paginas && $total_paginas > 0) $pagina = $total_paginas;
 
-// Obtener actividades según filtro
 if ($etiqueta_filtro) {
     $actividades = $crudAct->getActividadesPaginadasPorEtiqueta($etiqueta_filtro, $filtro, $pagina, $por_pagina);
 } else {
     if ($filtro === 'pendientes') {
         $actividades = $crudAct->getActividadesPendientesPaginadas($pagina, $por_pagina);
-    } elseif ($filtro === 'completadas') {
-        $actividades = $crudAct->getActividadesCompletadasPaginadas($pagina, $por_pagina);
     } else {
-        $actividades = $crudAct->getActividadesPaginadas($pagina, $por_pagina);
+        $actividades = $crudAct->getActividadesCompletadasPaginadas($pagina, $por_pagina);
     }
 }
 
 $total_actividades = $actividades->num_rows;
+$hoy = date('Y-m-d');
 ?>
 
 <!DOCTYPE html>
@@ -99,13 +90,10 @@ $total_actividades = $actividades->num_rows;
                         </div>
                         <div class="card-body">
                             <div class="btn-group btn-block" role="group">
-                                <a href="actividades.php?filtro=todas&pagina=1<?php echo $etiqueta_filtro ? '&etiqueta=' . $etiqueta_filtro : ''; ?>" class="btn btn-outline-primary <?php echo $filtro === 'todas' ? 'active' : ''; ?>">
-                                    <i class="fas fa-list"></i> Todas
-                                </a>
-                                <a href="actividades.php?filtro=pendientes&pagina=1<?php echo $etiqueta_filtro ? '&etiqueta=' . $etiqueta_filtro : ''; ?>" class="btn btn-outline-warning <?php echo $filtro === 'pendientes' ? 'active' : ''; ?>">
+                                <a href="actividades.php?filtro=pendientes&pagina=1<?php echo $etiqueta_filtro ? '&etiqueta=' . $etiqueta_filtro : ''; ?>" class="btn btn-outline-warning <?php echo $filtro === 'pendientes' ? 'active' : ''; ?>" style="width: 50%;">
                                     <i class="fas fa-hourglass-half"></i> Pendientes
                                 </a>
-                                <a href="actividades.php?filtro=completadas&pagina=1<?php echo $etiqueta_filtro ? '&etiqueta=' . $etiqueta_filtro : ''; ?>" class="btn btn-outline-success <?php echo $filtro === 'completadas' ? 'active' : ''; ?>">
+                                <a href="actividades.php?filtro=completadas&pagina=1<?php echo $etiqueta_filtro ? '&etiqueta=' . $etiqueta_filtro : ''; ?>" class="btn btn-outline-success <?php echo $filtro === 'completadas' ? 'active' : ''; ?>" style="width: 50%;">
                                     <i class="fas fa-check-circle"></i> Completadas
                                 </a>
                             </div>
@@ -157,10 +145,8 @@ $total_actividades = $actividades->num_rows;
                                         echo "Actividades Filtradas";
                                     elseif ($filtro === 'pendientes'):
                                         echo "Actividades Pendientes";
-                                    elseif ($filtro === 'completadas'):
-                                        echo "Actividades Completadas";
                                     else:
-                                        echo "Todas las Actividades";
+                                        echo "Actividades Completadas";
                                     endif;
                                 ?>
                             </h6>
@@ -190,7 +176,6 @@ $total_actividades = $actividades->num_rows;
                                             <?php while ($actividad = $actividades->fetch_assoc()): 
                                                 $fecha_formateada = date('d/m/Y', strtotime($actividad['fecha']));
                                                 $color = crudClientes::getColorActividad($actividad['fecha'], $actividad['completada']);
-                                                $hoy = date('Y-m-d');
                                                 $fecha_actividad = date('Y-m-d', strtotime($actividad['fecha']));
                                             ?>
                                             <tr <?php if ($actividad['completada'] == 1) echo 'class="actividad-completada-row"'; ?>>

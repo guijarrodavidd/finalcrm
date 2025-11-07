@@ -512,4 +512,142 @@ tr.actividad-completada-row td span {
     text-decoration: line-through !important;
     color: #999 !important;
 }
+/* ============================================
+   SECCIÓN DE AGREGAR ACTIVIDADES GAMIFICADA
+   ============================================ */
+
+.actividad-form-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    color: white;
+}
+
+.actividad-form-container h4 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.tipo-actividad-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tipo-btn {
+    position: relative;
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.tipo-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tipo-btn.active {
+    background: white;
+    color: #667eea;
+    border-color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.tipo-btn i {
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-group-custom {
+    margin-bottom: 1.2rem;
+}
+
+.form-group-custom label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.form-group-custom input,
+.form-group-custom textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group-custom input::placeholder,
+.form-group-custom textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group-custom input:focus,
+.form-group-custom textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.form-row-custom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn-agregar-actividad {
+    background: white;
+    color: #667eea;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn-agregar-actividad:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: #f0f0f0;
+}
+
+.btn-agregar-actividad:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .tipo-actividad-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-row-custom {
+        grid-template-columns: 1fr;
+    }
+}
+
 
