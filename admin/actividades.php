@@ -1,8 +1,5 @@
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include("./includes/database.php");
 require_once "./includes/crudClientes.php";
 require_once "./includes/crudActividades.php";
@@ -93,14 +90,13 @@ $total_actividades = $actividades->num_rows;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-
+    <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
 </head>
 <body id="page-top">
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <?php include("./includes/navbar.php"); ?>
+                <?php include("./includes/navbar_admin.php"); ?>
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                         <h1 class="h3 mb-0 text-gray-800">Actividades (Admin - Todas las Tiendas)</h1>
@@ -146,7 +142,7 @@ $total_actividades = $actividades->num_rows;
                                         <input type="hidden" name="filtro" value="<?php echo $filtro; ?>">
                                         <input type="hidden" name="pagina" value="1">
                                         <div class="input-group">
-                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre cliente..." value="<?php echo htmlspecialchars($nombre_filtro); ?>">
+                                            <input type="text" name="nombre" class="form-control" placeholder="Nombre cliente..." value="<?php echo htmlspecialchars($nombre_filtro ?? ''); ?>">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                                             </div>

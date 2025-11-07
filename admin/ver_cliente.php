@@ -87,7 +87,7 @@ $tienda = $stmt_tienda->get_result()->fetch_assoc();
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <?php include("./includes/navbar.php"); ?>
+                <?php include("./includes/navbar_admin.php"); ?>
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">

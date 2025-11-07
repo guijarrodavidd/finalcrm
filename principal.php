@@ -3,16 +3,20 @@ session_start();
 include("./admin/includes/database.php");
 include("./admin/includes/crudPrincipal.php");
 
+
 $connClass = new Connection();
 $conexion = $connClass->getConnection();
+
 
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: index.php");
     exit();
 }
 
+
 $usuario_id = $_SESSION['usuario_id'];
 $crud = new CrudPrincipal($conexion, $usuario_id);
+
 
 // Obtener datos del dashboard
 $total_clientes = $crud->getTotalClientes();
@@ -22,6 +26,7 @@ $clientes_recientes = $crud->getClientesRecientes();
 $proximas_actividades = $crud->getProximasActividades();
 $hoy = date('Y-m-d');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -37,26 +42,33 @@ $hoy = date('Y-m-d');
     <link href="css/main.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/favicon.png">
 
+
 </head>
 <body id="page-top">
+
 
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
 
+
                 <!-- Navbar mediante include -->
-                <?php include("./admin/includes/navbar.php"); ?>
+                <?php include("./admin/includes/navbar_usuario.php"); ?>
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
+
                     <!-- Content Row -->
                     <div class="row">
+
 
                         <!-- Total Clientes Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -68,6 +80,7 @@ $hoy = date('Y-m-d');
                             </div>
                         </div>
 
+
                         <!-- Actividades Pendientes Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
@@ -77,6 +90,7 @@ $hoy = date('Y-m-d');
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- Actividades Hoy Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -88,6 +102,7 @@ $hoy = date('Y-m-d');
                             </div>
                         </div>
 
+
                         <!-- Visitas Recientes Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
@@ -98,10 +113,13 @@ $hoy = date('Y-m-d');
                             </div>
                         </div>
 
+
                     </div>
+
 
                     <!-- Content Row -->
                     <div class="row">
+
 
                         <!-- Clientes Recientes -->
                         <div class="col-lg-6 mb-4">
@@ -137,6 +155,7 @@ $hoy = date('Y-m-d');
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- Próximas Actividades -->
                         <div class="col-lg-6 mb-4">
@@ -175,11 +194,15 @@ $hoy = date('Y-m-d');
                             </div>
                         </div>
 
+
                     </div>
+
 
                 </div>
 
+
             </div>
+
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -190,11 +213,14 @@ $hoy = date('Y-m-d');
                 </div>
             </footer>
 
+
         </div>
     </div>
 
+
     <script src="startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"></script>
     <script src="startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>

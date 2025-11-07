@@ -106,7 +106,7 @@ if ($cliente_abierto) {
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <?php include("./admin/includes/navbar.php"); ?>
+                <?php include("./admin/includes/navbar_usuario.php"); ?>
                 <div class="container-fluid">
                     <div class="mb-4 mt-4">
                         <a href="anadir_cliente.php" class="btn btn-primary">

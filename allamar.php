@@ -88,7 +88,7 @@ $hoy = date('Y-m-d');
 <body>
 
     <!-- Navbar -->
-    <?php include("./admin/includes/navbar.php"); ?>
+    <?php include("./admin/includes/navbar_usuario.php"); ?>
 
     <!-- Contenedor principal -->
     <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px;">

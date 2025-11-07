@@ -47,7 +47,7 @@ $hoy = date('Y-m-d');
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <?php include("./includes/navbar.php"); ?>
+                <?php include("./includes/navbar_admin.php"); ?>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
