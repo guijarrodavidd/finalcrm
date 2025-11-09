@@ -47,32 +47,32 @@ try {
             <ul class="navbar-nav w-100">
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'principal') ? 'active' : ''; ?>" href="principal.php">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                        📊 Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'clientes') ? 'active' : ''; ?>" href="clientes.php">
-                        <i class="fas fa-users"></i> Clientes
+                        👥 Clientes
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'actividades') ? 'active' : ''; ?>" href="actividades.php">
-                        <i class="fas fa-tasks"></i> Actividades
+                        ✅ Actividades
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page === 'allamar') ? 'active' : ''; ?>" href="allamar.php">
-                        <i class="fas fa-phone-alt"></i> ¡A Llamar!
+                        📞 ¡A Llamar!
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="logout.php">
-                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        🚪 Cerrar Sesión
                     </a>
                 </li>
                 <!-- Usuario y foto extremo derecho -->
                 <li class="nav-item ms-auto d-flex align-items-center ps-3 pe-4">
-                    <span class="text-dark font-weight-bold me-4" style="white-space: nowrap;">Usuario: <?php echo htmlspecialchars($usuario_nombre); ?></span>
+                    <span class="text-dark font-weight-bold me-4" style="white-space: nowrap;">👤 Usuario: <?php echo htmlspecialchars($usuario_nombre); ?></span>
                     <?php if ($usuario_foto && file_exists($usuario_foto)): ?>
                         <img src="<?php echo htmlspecialchars($usuario_foto); ?>" alt="Perfil" class="rounded-circle" style="width: 45px; height: 45px; border: 2px solid #007bff; object-fit: cover; background: #fff; padding: 2px;">
                     <?php else: ?>

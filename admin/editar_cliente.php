@@ -48,19 +48,45 @@ if (!$cliente) {
     exit();
 }
 
+// Obtener etiquetas actuales del cliente
+$etiquetas_cliente_resultado = $crud->getEtiquetasClienteIds($id);
+$etiquetas_cliente = [];
+while ($row = $etiquetas_cliente_resultado->fetch_assoc()) {
+    $etiquetas_cliente[] = $row['etiqueta_id'];
+}
+
+// Obtener todas las etiquetas disponibles
+$todas_etiquetas = $crud->getTodasLasEtiquetas();
+
 // Procesar formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre_apellidos = trim($_POST['nombre_apellidos'] ?? '');
     $dni = trim($_POST['dni'] ?? '');
     $telefono = trim($_POST['telefono'] ?? '');
     $convergente = trim($_POST['convergente'] ?? '');
+    $etiquetas_seleccionadas = $_POST['etiquetas'] ?? [];
 
     if (empty($nombre_apellidos) || empty($telefono)) {
         $mensaje_error = "El nombre y teléfono son obligatorios.";
     } else {
         if ($crud->actualizarCliente($id, $nombre_apellidos, $dni, $telefono, $convergente)) {
+            // Actualizar etiquetas
+            $crud->eliminarEtiquetasCliente($id);
+            
+            foreach ($etiquetas_seleccionadas as $etiqueta_id) {
+                $etiqueta_id = intval($etiqueta_id);
+                $crud->agregarEtiquetaCliente($id, $etiqueta_id);
+            }
+            
             $mensaje = "Cliente actualizado correctamente.";
             $cliente = $crud->getClienteById($id);
+            
+            // Actualizar etiquetas mostradas
+            $etiquetas_cliente_resultado = $crud->getEtiquetasClienteIds($id);
+            $etiquetas_cliente = [];
+            while ($row = $etiquetas_cliente_resultado->fetch_assoc()) {
+                $etiquetas_cliente[] = $row['etiqueta_id'];
+            }
         } else {
             $mensaje_error = "Error al actualizar el cliente.";
         }
@@ -141,6 +167,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label for="convergente"><strong>Convergente</strong></label>
                                     <input type="text" class="form-control" id="convergente" name="convergente" value="<?php echo htmlspecialchars($cliente['convergente']); ?>" placeholder="Ej: Movistar, Vodafone...">
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group">
+                                    <label><strong>Etiquetas</strong></label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <?php 
+                                            $todas_etiquetas->data_seek(0);
+                                            $tiene_etiquetas = false;
+                                            while ($etiqueta = $todas_etiquetas->fetch_assoc()):
+                                                $tiene_etiquetas = true;
+                                                $checked = in_array($etiqueta['id'], $etiquetas_cliente) ? 'checked' : '';
+                                            ?>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="etiqueta_<?php echo $etiqueta['id']; ?>" name="etiquetas[]" value="<?php echo $etiqueta['id']; ?>" <?php echo $checked; ?>>
+                                                    <label class="custom-control-label" for="etiqueta_<?php echo $etiqueta['id']; ?>">
+                                                        <span style="display: inline-block; width: 12px; height: 12px; background-color: <?php echo htmlspecialchars($etiqueta['color']); ?>; border-radius: 3px; margin-right: 8px;"></span>
+                                                        <?php echo htmlspecialchars($etiqueta['nombre']); ?>
+                                                    </label>
+                                                </div>
+                                            <?php endwhile; ?>
+                                            <?php if (!$tiene_etiquetas): ?>
+                                                <p class="text-muted">No hay etiquetas disponibles</p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group">
+                                    <label><strong>ID Cliente</strong></label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($cliente['id']); ?>" disabled>
+                                    <small class="form-text text-muted">No se puede modificar</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Fecha de Creación</strong></label>
+                                    <input type="text" class="form-control" value="<?php echo date('d/m/Y H:i', strtotime($cliente['fecha_creacion'])); ?>" disabled>
+                                    <small class="form-text text-muted">No se puede modificar</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Última Visita</strong></label>
+                                    <input type="text" class="form-control" value="<?php echo $cliente['ultima_visita'] ? date('d/m/Y H:i', strtotime($cliente['ultima_visita'])) : 'Sin visitas'; ?>" disabled>
+                                    <small class="form-text text-muted">Se actualiza automáticamente</small>
                                 </div>
 
                                 <hr>

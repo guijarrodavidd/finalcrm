@@ -10,14 +10,14 @@ class usuarios {
     }
 
     public function showUsuarios() {
-        $sql = "SELECT id, nombre, rol, fecha_creacion FROM usuarios ORDER BY fecha_creacion DESC";
+        $sql = "SELECT id, nombre, foto, rol, fecha_creacion FROM usuarios ORDER BY fecha_creacion DESC";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getById($id) {
-        $sql = "SELECT id, nombre, rol FROM usuarios WHERE id = ?";
+        $sql = "SELECT id, nombre, foto, rol, fecha_creacion FROM usuarios WHERE id = ?";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -67,4 +67,5 @@ class usuarios {
         return $stmt->get_result()->num_rows > 0;
     }
 }
+
 ?>

@@ -249,7 +249,7 @@ $hoy = date('Y-m-d');
                                                     <input type="hidden" name="cliente_id" value="<?php echo $cliente['id']; ?>">
                                                     <input type="hidden" name="estado" value="<?php echo $act['completada'] == 1 ? 0 : 1; ?>">
                                                     <button type="submit" name="marcar_completada" class="btn btn-sm <?php echo $act['completada'] == 1 ? 'btn-warning' : 'btn-success'; ?>">
-                                                        <i class="fas fa-<?php echo $act['completada'] == 1 ? 'undo' : 'check'; ?>">Marcar como completado</i>
+                                                        <?php echo $act['completada'] == 1 ? '🔄 Desmarcar' : '✓ Marcar como Completada'; ?>
                                                     </button>
                                                 </form>
                                             </td>

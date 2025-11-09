@@ -69,13 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $foto_nombre = $_FILES['foto']['name'];
         $foto_ext = pathinfo($foto_nombre, PATHINFO_EXTENSION);
         $foto_nuevo_nombre = 'user_' . time() . '.' . $foto_ext;
-        $foto_path = '../images/profiles/' . $foto_nuevo_nombre;
+        $foto_dir = '../images/profiles/';
+        $foto_ruta_completa = $foto_dir . $foto_nuevo_nombre;
         
-        if (!is_dir('../images/profiles/')) {
-            mkdir('../images/profiles/', 0755, true);
+        if (!is_dir($foto_dir)) {
+            mkdir($foto_dir, 0755, true);
         }
         
-        if (move_uploaded_file($foto_tmp, $foto_path)) {
+        if (move_uploaded_file($foto_tmp, $foto_ruta_completa)) {
             $foto_path = 'images/profiles/' . $foto_nuevo_nombre;
         } else {
             $mensaje_error = "Error al subir la foto.";
@@ -104,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $stmt_foto->bind_param("si", $foto_path, $id_usuario);
                         $stmt_foto->execute();
                     }
-                    $mensaje = "Usuario creado correctamente.";
+                    $mensaje = "✅ Usuario creado correctamente.";
                     $mostrar_formulario = false;
                     $listaUsuarios = $usuariosObj->showUsuarios();
                 } else {
@@ -126,10 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $mensaje_error = "Las contraseñas no coinciden.";
                     } else {
                         $usuariosObj->actualizarContraseña($id, $password);
-                        $mensaje = "Usuario actualizado correctamente (contraseña cambiada).";
+                        $mensaje = "✅ Usuario actualizado correctamente (contraseña cambiada).";
                     }
                 } else {
-                    $mensaje = "Usuario actualizado correctamente.";
+                    $mensaje = "✅ Usuario actualizado correctamente.";
                 }
                 $mostrar_formulario = false;
                 $listaUsuarios = $usuariosObj->showUsuarios();
@@ -152,10 +153,9 @@ if ($accion === "crear") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>PhoneCRM - Gestión de Usuarios</title>
-    <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
 </head>
@@ -168,7 +168,7 @@ if ($accion === "crear") {
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-                        <h1 class="h3 mb-0 text-gray-800">Gestión de Usuarios</h1>
+                        <h1 class="h3 mb-0 text-gray-800">⚙️ Gestión de Usuarios</h1>
                     </div>
 
                     <?php if ($mensaje): ?>
@@ -182,7 +182,7 @@ if ($accion === "crear") {
 
                     <?php if ($mensaje_error): ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?php echo htmlspecialchars($mensaje_error); ?>
+                            ❌ <?php echo htmlspecialchars($mensaje_error); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -190,12 +190,12 @@ if ($accion === "crear") {
                     <?php endif; ?>
 
                     <a href="usuarios.php?accion=crear" class="btn btn-primary mb-3">
-                        <i class="fas fa-plus"></i> Nuevo Usuario
+                        ➕ Nuevo Usuario
                     </a>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 bg-primary">
-                            <h6 class="m-0 font-weight-bold text-white">Usuarios del Sistema</h6>
+                            <h6 class="m-0 font-weight-bold text-white">👥 Usuarios del Sistema</h6>
                         </div>
                         <div class="card-body">
                             <?php if (empty($listaUsuarios)): ?>
@@ -208,7 +208,7 @@ if ($accion === "crear") {
                                     <table class="table table-bordered table-hover">
                                         <thead class="bg-light">
                                             <tr>
-                                                <th style="text-align:center; width:80px;">Foto</th>
+                                                <th style="text-align:center; width:80px;">📷 Foto</th>
                                                 <th>ID</th>
                                                 <th>Nombre</th>
                                                 <th>Rol</th>
@@ -221,29 +221,30 @@ if ($accion === "crear") {
                                             <tr>
                                                 <td style="text-align:center; vertical-align:middle;">
                                                     <?php 
-                                                    $foto_path = "../" . $user['foto'];
-                                                    if (!empty($user['foto']) && file_exists($foto_path)): 
+                                                    $foto = $user['foto'] ?? '';
+                                                    if (!empty($foto)) {
+                                                        // Agregar ../ porque estamos en /admin/
+                                                        echo '<img src="../' . htmlspecialchars($foto) . '" style="width:50px;height:50px;border-radius:50%;border:2px solid #007bff;object-fit:cover;" onerror="this.src=\'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22%3E%3C/svg%3E\'; this.style.backgroundColor=\'#007bff\';">';
+                                                    } else {
+                                                        echo '<i class="fas fa-user-circle" style="font-size:50px;color:#007bff;"></i>';
+                                                    }
                                                     ?>
-                                                        <img src="<?php echo htmlspecialchars($foto_path); ?>" alt="<?php echo htmlspecialchars($user['nombre']); ?>" class="rounded-circle" style="width:50px; height:50px; object-fit:cover; border:2px solid #007bff; background:#fff; padding:2px;">
-                                                    <?php else: ?>
-                                                        <i class="fas fa-user-circle" style="font-size:50px; color:#007bff;"></i>
-                                                    <?php endif; ?>
                                                 </td>
                                                 <td><?php echo htmlspecialchars($user['id']); ?></td>
                                                 <td><?php echo htmlspecialchars($user['nombre']); ?></td>
                                                 <td>
                                                     <span class="badge badge-<?php echo $user['rol'] === 'encargado' ? 'danger' : 'info'; ?>">
-                                                        <?php echo ucfirst($user['rol']); ?>
+                                                        <?php echo $user['rol'] === 'encargado' ? '👑 Encargado' : '🏪 Tienda'; ?>
                                                     </span>
                                                 </td>
                                                 <td><?php echo date('d/m/Y H:i', strtotime($user['fecha_creacion'])); ?></td>
                                                 <td>
                                                     <a href="usuarios.php?accion=editar&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-warning">
-                                                        <i class="fas fa-edit"></i> Editar
+                                                        ✏️ Editar
                                                     </a>
                                                     <?php if ($user['id'] != $_SESSION['usuario_id']): ?>
                                                         <a href="usuarios.php?accion=eliminar&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">
-                                                            <i class="fas fa-trash"></i> Eliminar
+                                                            🗑️ Eliminar
                                                         </a>
                                                     <?php endif; ?>
                                                 </td>
@@ -258,9 +259,9 @@ if ($accion === "crear") {
 
                     <?php if ($mostrar_formulario): ?>
                     <div class="card shadow mb-4 border-left-primary">
-                        <div class="card-header bg-gradient-primary py-3">
+                        <div class="card-header bg-primary py-3">
                             <h6 class="m-0 font-weight-bold text-white">
-                                <?php echo $accion === "crear" ? "Crear Nuevo Usuario" : "Editar Usuario"; ?>
+                                <?php echo $accion === "crear" ? "➕ Crear Nuevo Usuario" : "✏️ Editar Usuario"; ?>
                             </h6>
                         </div>
                         <div class="card-body">
@@ -281,51 +282,52 @@ if ($accion === "crear") {
                                 <div class="form-group">
                                     <label for="rol"><strong>Rol</strong></label>
                                     <select name="rol" id="rol" class="form-control form-control-lg" required>
-                                        <option value="tienda" <?php echo ($usuario['rol'] ?? '') === 'tienda' ? 'selected' : ''; ?>>Tienda</option>
-                                        <option value="encargado" <?php echo ($usuario['rol'] ?? '') === 'encargado' ? 'selected' : ''; ?>>Encargado</option>
+                                        <option value="tienda" <?php echo ($usuario['rol'] ?? '') === 'tienda' ? 'selected' : ''; ?>>🏪 Tienda</option>
+                                        <option value="encargado" <?php echo ($usuario['rol'] ?? '') === 'encargado' ? 'selected' : ''; ?>>👑 Encargado</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="foto"><strong>Foto de Perfil</strong></label>
-                                    <?php if ($accion === "editar" && !empty($usuario['foto']) && file_exists("../" . $usuario['foto'])): ?>
+                                    <label for="foto"><strong>📷 Foto de Perfil</strong></label>
+                                    <?php if ($accion === "editar" && !empty($usuario['foto'])): ?>
                                         <div class="mb-3">
-                                            <img src="<?php echo "../" . htmlspecialchars($usuario['foto']); ?>" alt="Foto actual" style="width:80px; height:80px; border-radius:50%; border:2px solid #007bff; background:#fff; padding:3px; object-fit:cover;">
+                                            <img src="../<?php echo htmlspecialchars($usuario['foto']); ?>" alt="Foto actual" style="width:80px; height:80px; border-radius:50%; border:2px solid #007bff; background:#fff; padding:3px; object-fit:cover;">
+                                            <small class="d-block mt-1 text-muted">Foto actual</small>
                                         </div>
                                     <?php endif; ?>
                                     <input type="file" name="foto" id="foto" class="form-control form-control-lg" accept="image/*">
-                                    <small class="form-text text-muted">Formatos: JPG, PNG. Máximo 5MB</small>
+                                    <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Máximo 5MB</small>
                                 </div>
 
                                 <?php if ($accion === "crear"): ?>
                                 <div class="form-group">
-                                    <label for="password"><strong>Contraseña</strong></label>
+                                    <label for="password"><strong>🔐 Contraseña</strong></label>
                                     <input type="password" name="password" id="password" class="form-control form-control-lg" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password2"><strong>Repetir Contraseña</strong></label>
+                                    <label for="password2"><strong>🔐 Repetir Contraseña</strong></label>
                                     <input type="password" name="password2" id="password2" class="form-control form-control-lg" required>
                                 </div>
                                 <?php else: ?>
                                 <div class="alert alert-info">
-                                    <i class="fas fa-info-circle"></i> Déja vacío si no quieres cambiar la contraseña
+                                    <i class="fas fa-info-circle"></i> Déja los campos de contraseña vacíos si no quieres cambiarla
                                 </div>
                                 <div class="form-group">
-                                    <label for="password"><strong>Nueva Contraseña (opcional)</strong></label>
+                                    <label for="password"><strong>🔐 Nueva Contraseña (opcional)</strong></label>
                                     <input type="password" name="password" id="password" class="form-control form-control-lg">
                                 </div>
                                 <div class="form-group">
-                                    <label for="password2"><strong>Repetir Contraseña (opcional)</strong></label>
+                                    <label for="password2"><strong>🔐 Repetir Contraseña (opcional)</strong></label>
                                     <input type="password" name="password2" id="password2" class="form-control form-control-lg">
                                 </div>
                                 <?php endif; ?>
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-save"></i> <?php echo $accion === "crear" ? "Crear Usuario" : "Actualizar Usuario"; ?>
+                                        💾 <?php echo $accion === "crear" ? "Crear Usuario" : "Actualizar Usuario"; ?>
                                     </button>
                                     <a href="usuarios.php" class="btn btn-secondary btn-lg">
-                                        <i class="fas fa-times"></i> Cancelar
+                                        ✖️ Cancelar
                                     </a>
                                 </div>
                             </form>
@@ -347,8 +349,8 @@ if ($accion === "crear") {
         </div>
     </div>
 
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
